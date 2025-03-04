@@ -30,6 +30,7 @@ public class Pedido extends javax.swing.JPanel {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -823,6 +824,12 @@ public class Pedido extends javax.swing.JPanel {
 
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.addRow(new Object[]{nombre, cantidad, unidad, total});
+        
+        // Send data to the database
+        int codigo = Integer.parseInt(jlNombre.getText());
+        String detalle = jComboBox1.getSelectedItem().toString();
+        String hora = java.time.LocalTime.now().toString();
+        objetoPedido.enviarPedido(codigo, cantidad, detalle, hora);
         
         desabilitarformulario();
     }//GEN-LAST:event_jButton11ActionPerformed
