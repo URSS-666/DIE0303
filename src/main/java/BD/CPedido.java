@@ -15,6 +15,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -156,6 +157,27 @@ public class CPedido {
             ps.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al obtener datos: " + e.toString());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
+    }
+
+    public void enviarPedido(String nombre, int cantidad, String unidad, double total) {
+        Database objetoConexion = new Database();
+        String consulta = "INSERT INTO pedidos (nombre, cantidad, unidad, total) VALUES (?, ?, ?, ?)";
+        
+        try (Connection conexion = objetoConexion.establecerConexion();
+             PreparedStatement ps = conexion.prepareStatement(consulta)) {
+            
+            ps.setString(1, nombre);
+            ps.setInt(2, cantidad);
+            ps.setString(3, unidad);
+            ps.setDouble(4, total);
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Pedido enviado correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al enviar pedido: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }

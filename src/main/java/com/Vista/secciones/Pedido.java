@@ -824,6 +824,8 @@ public class Pedido extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.addRow(new Object[]{nombre, cantidad, unidad, total});
         
+        objetoPedido.enviarPedido(nombre, cantidad, unidad, total);
+        
         desabilitarformulario();
     }//GEN-LAST:event_jButton11ActionPerformed
 
